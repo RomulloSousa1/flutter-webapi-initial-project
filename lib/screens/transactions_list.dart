@@ -1,4 +1,5 @@
 import 'package:bytebank/models/contact.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsList extends StatelessWidget {
@@ -39,18 +40,3 @@ class TransactionsList extends StatelessWidget {
   }
 }
 
-class Transaction {
-  final double value;
-  final Contact contact;
-
-  Transaction(
-      this.value,
-      this.contact,
-      );
-
-  @override
-  String toString() {
-    return 'Transaction{value: $value, contact: $contact}';
-  }
-
-}
