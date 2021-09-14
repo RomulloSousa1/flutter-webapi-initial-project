@@ -16,17 +16,24 @@ class Dashboard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Row(
-            children: [
-              _FormTranfer(
-                'Transfer',
-                Icons.monetization_on,
-              ),
-              _FormTranfer(
-                'Transaction Feed',
-                Icons.description,
-              ),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _FormTranfer(
+                  'Transfer',
+                  Icons.monetization_on,
+                  onClick: () {
+                    _showContactList(context);
+                  },
+                ),
+                _FormTranfer(
+                  'Transaction Feed',
+                  Icons.description,
+                  onClick: () => print('Transaction feed foi clicado'),
+                ),
+              ],
+            ),
           )
         ],
       ),
@@ -37,8 +44,13 @@ class Dashboard extends StatelessWidget {
 class _FormTranfer extends StatelessWidget {
   final String nome;
   final IconData icon;
+  final Function onClick;
 
-  _FormTranfer(this.nome, this.icon);
+  _FormTranfer(
+    this.nome,
+    this.icon, {
+    @required this.onClick,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +60,7 @@ class _FormTranfer extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         child: InkWell(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ContactsList(),
-              ),
-            );
+            onClick();
           },
           child: Container(
             padding: EdgeInsets.all(8.0),
@@ -81,4 +89,12 @@ class _FormTranfer extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showContactList(BuildContext context) {
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => ContactsList(),
+    ),
+  );
 }
