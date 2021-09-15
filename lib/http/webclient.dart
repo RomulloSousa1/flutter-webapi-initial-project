@@ -32,18 +32,16 @@ Future<List<Transaction>> findAll() async {
     interceptors: [LoggingInterceptor()],
   );
   final Response response =
-      await get(Uri.parse('http://192.168.4.14:8080/transactions'));
+      await get(Uri.parse('http://192.168.4.145:8080/transactions')).timeout(
+    Duration(seconds: 5),
+  );
   final List<dynamic> decodedJson = jsonDecode(response.body);
   final List<Transaction> transactions = [];
-  for(Map<String, dynamic> transactionJson in decodedJson){
-    final Map<String,dynamic> contactJson = transactionJson['contact'];
+  for (Map<String, dynamic> transactionJson in decodedJson) {
+    final Map<String, dynamic> contactJson = transactionJson['contact'];
     final Transaction transaction = Transaction(
       transactionJson['value'],
-      Contact(
-        0,
-        contactJson['name'],
-        contactJson['accountNumber']
-      ),
+      Contact(0, contactJson['name'], contactJson['accountNumber']),
     );
     transactions.add(transaction);
   }
